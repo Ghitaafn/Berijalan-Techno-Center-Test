@@ -23,15 +23,17 @@ export class womenCollectionPage {
     }
 
     filterSize(size) {
-        cy.get('span[class="filter-option"]')
+        cy.get('div[class="attribute-filter mt-8"]')
+        .eq(0)
         .contains(size)
-        .dblclick();
+        .click();
     }
 
     filterColor(color) {
-        cy.get('span[class="filter-option"]')
+        cy.get('div[class="attribute-filter mt-8"]')
+        .eq(1)
         .contains(color)
-        .dblclick();
+        .click();
     }
 
     selectProduct(order) {
@@ -40,9 +42,9 @@ export class womenCollectionPage {
         .click();
     }
     getProductName(order) {
-        return cy.get('p[class="product-name"]')
+        cy.get('div[class="product-name product-list-name mt-4 mb-1"]')
         .eq(order)
-        .invoke('text');
+        .invoke('productName');
     }
 }
 export const onWomenCollectionPage = new womenCollectionPage();

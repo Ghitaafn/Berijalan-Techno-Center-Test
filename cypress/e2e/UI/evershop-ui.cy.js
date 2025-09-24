@@ -1,9 +1,12 @@
 const {onHomePage} = require("../../support/UI/homePage");
 const {onUnregisteredAccountPage} = require("../../support/UI/unregisteredAccountPage");
 const {onWomenCollectionPage} = require("../../support/UI/womenCollectionPage");
+const {onDetailProductPage} = require("../../support/UI/detailProductPage");
+const {onCartPage} = require("../../support/UI/cartPage");
+const {onCheckoutPage} = require("../../support/UI/checkoutPage");
 
 describe('Evershop UI Test', () => {
-    let fullName, email, password, size, color, min, max;
+    let fullName, email, password, size, color, min, max, order, telephone, address, city, country, province, postalCode;
     
 
     beforeEach(() => {
@@ -26,7 +29,7 @@ describe('Evershop UI Test', () => {
         });
     })
 
-    it.only('Soal-2. Add to Cart Product & Verify Quantity',()=>{
+    it('Soal-2. Add to Cart Product & Verify Quantity',()=>{
         onHomePage.verifyHomePage();
         onHomePage.clickUnregisteredAccountIcon();
         cy.wait(5000);
@@ -45,16 +48,99 @@ describe('Evershop UI Test', () => {
             onWomenCollectionPage.filterPriceMinRange(min);
             onWomenCollectionPage.filterPriceMaxRange(max);
             onWomenCollectionPage.filterSize(size);
+            cy.wait(3000)
             onWomenCollectionPage.filterColor(color);
+            onWomenCollectionPage.selectProduct(0);
+            onDetailProductPage.selectSize(size);
+            cy.wait(3000)
+            onDetailProductPage.selectColor(color);
+            cy.wait(2000)
+            onDetailProductPage.addToCart();
+            onDetailProductPage.clickViewCart();
+            cy.wait(2000)
+            onCartPage.verifyCartPage();
+            order = 1
+            onCartPage.verifyQuantity(order);
+
         });
     })
 
     it('Soal-3. Remove product from cart',()=>{
+        onHomePage.verifyHomePage();
+        onHomePage.clickUnregisteredAccountIcon();
+        cy.wait(5000);
+        onUnregisteredAccountPage.verifyOnUnregisterPage();
+        cy.fixture('UI/account2.json').then((data) => {
+            email = data.email;
+            password = data.password;
+            size = 'M';
+            color = 'Purple';
+            onUnregisteredAccountPage.loginToAccount(email,password);
+            onHomePage.verifyHomePage();
+            onHomePage.clickWomenCollection();
+            onWomenCollectionPage.verifyWomenCollectionPage();
+            onWomenCollectionPage.selectProduct(0);
+            cy.wait(2000)
+            onDetailProductPage.selectSize(size);
+            cy.wait(3000)
+            onDetailProductPage.selectColor(color);
+            cy.wait(2000)
+            onDetailProductPage.addToCart();
+            onDetailProductPage.clickViewCart();
+            cy.wait(2000)
+            onCartPage.verifyCartPage();
+            cy.wait(2000)
+            
 
+        });
     })
     
-    it('Soal-4. Checkout Flow',()=>{
+    it.only('Soal-4. Checkout Flow',()=>{
+        onHomePage.verifyHomePage();
+        onHomePage.clickUnregisteredAccountIcon();
+        cy.wait(5000);
+        onUnregisteredAccountPage.verifyOnUnregisterPage();
+        cy.fixture('UI/account2.json').then((data) => {
+            email = data.email;
+            password = data.password;
+            size = 'M';
+            color = 'Purple';
+            onUnregisteredAccountPage.loginToAccount(email,password);
+            onHomePage.verifyHomePage();
+            onHomePage.clickWomenCollection();
+            onWomenCollectionPage.verifyWomenCollectionPage();
+            onWomenCollectionPage.selectProduct(0);
+            cy.wait(2000)
+            onDetailProductPage.selectSize(size);
+            cy.wait(3000)
+            onDetailProductPage.selectColor(color);
+            cy.wait(2000)
+            onDetailProductPage.addToCart();
+            onDetailProductPage.clickViewCart();
+            cy.wait(2000)
+            onCartPage.verifyCartPage();
+            cy.wait(2000)
+            onCartPage.clickCheckout();
+            onCheckoutPage.verifyCheckoutPage();
+            cy.wait(2000)
+            cy.fixture('UI/shipping-address.json').then((data) => {
+                fullName = data.Full_Name;
+                telephone = data.Telephone;
+                address = data.Address;
+                city = data.City;
+                country = data.Country;
+                postalCode = data.Postal_Code;
+                onCheckoutPage.fillShippingDetails1(fullName, telephone, address, city);
+                cy.wait(2000)
+                onCheckoutPage.fillShippingDetails2(country, province, postalCode);
+                onCheckoutPage.selectShippingMethod0;
+                onCheckoutPage.clickContinueToPayment;
+                order = 1;
+                onCheckoutPage.clickPaymentMethod(order);
 
+            });
+
+        });
     })
 
     it('Soal-5. Mobile Viewport Test',()=>{

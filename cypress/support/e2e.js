@@ -16,4 +16,3 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import './API/api-method.js'
-import 'cypress-real-events';

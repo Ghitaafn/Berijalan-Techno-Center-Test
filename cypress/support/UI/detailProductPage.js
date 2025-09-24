@@ -1,17 +1,19 @@
 export class detailProductPage {
 
     verifyProductName(productName) {
-        cy.get('h1.product-name').should('have.text', productName);
+        cy.get('h1[class="product-single-name"]').should('have.text', productName);
     }
 
     selectSize(size) {
-        cy.get('div[class="variant-option-list flex jutify-start gap-2 flex-wrap"]')
+        //cy.get('ul[class="variant-option-list flex jutify-start gap-2 flex-wrap"]')
+        cy.get('a[href="#"]')
         .contains(size)
         .click();
     }
 
     selectColor(color) {
-        cy.get('div[class="variant-option-list flex jutify-start gap-2 flex-wrap"]')
+        //cy.get('ul[class="variant-option-list flex jutify-start gap-2 flex-wrap"]')
+        cy.get('a[href="#"]')
         .contains(color)
         .click();
     }
@@ -23,8 +25,7 @@ export class detailProductPage {
     }
 
     addToCart() {
-        cy.get('button[class="button primary outline"]')
-        .contains('Add to Cart')
+        cy.contains('ADD TO CART')
         .click();
     }
 
@@ -36,7 +37,7 @@ export class detailProductPage {
 
     clickViewCart() {
         cy.get('a[class="add-cart-popup-button"]')
-        .contains('View Cart')
+        .contains('VIEW CART')
         .click();
     }
 }

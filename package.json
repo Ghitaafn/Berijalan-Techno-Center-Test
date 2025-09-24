@@ -7,9 +7,9 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "cypress": "^15.3.0",
     "cypress-real-events": "^1.15.0"
-  }
+  },
+  "description": ""
 }
