@@ -22,21 +22,27 @@ export class HomePage {
         .should('be.visible');
     }
 
-    verifySearchIcon() {
-        cy.get('a[class="search-icon"]').should('be.visible');
+    clickSearchIcon() {
+        cy.get('a[class="search-icon"]')
+        .should('be.visible')
+        .click();
     }
 
-    verifyCartIcon() {
-        cy.get('a[class="mini-cart-icon"]').should('be.visible');
+    clickCartIcon() {
+        cy.get('a[class="mini-cart-icon"]')
+        .should('be.visible')
+        .click();
     }
 
-    verifyUnregisteredAccountIcon() {
-        cy.get('a[href="https://demo.evershop.io/account/login"]').should('be.visible');
+    clickUnregisteredAccountIcon() {
+        cy.get('div[class="self-center"] > a[href="https://demo.evershop.io/account/login"]')
+        .should('be.visible')
+        .dblclick();
     }
 
-    verifyRegisteredAccountIcon() {
+    clickRegisteredAccountIcon() {
         cy.get('a[href="https://demo.evershop.io/account"]').should('be.visible');
     }
     
 }
-export const onHomePage = new HomePage();
+export const onHomePage = new HomePage();   
