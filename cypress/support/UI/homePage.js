@@ -4,22 +4,25 @@ export class HomePage {
         cy.contains('Your Heading Here');
     }
 
-    verifyKidsCollection() {
+    clickKidsCollection() {
         cy.get('a[class="button primary"]')
-        .contains('Shop Kids')
-        .should('be.visible');
+        .contains('Shop kids')
+        .should('be.visible')
+        .click();
     }
 
-    verifyWomenCollection() {
+    clickWomenCollection() {
         cy.get('a[class="button primary"]')
-        .contains('Shop Women')
-        .should('be.visible');
+        .contains('Shop women')
+        .should('be.visible')
+        .click();
     }
-
-    verifyMenCollection() {
+    
+    clickMenCollection() {
         cy.get('a[class="button primary"]')
-        .contains('Shop Men')
-        .should('be.visible');
+        .contains('Shop men')
+        .should('be.visible')
+        .click();
     }
 
     clickSearchIcon() {
