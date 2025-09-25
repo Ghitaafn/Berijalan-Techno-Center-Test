@@ -2,7 +2,7 @@ const {onHomePage} = require("../../support/UI/homePage");
 const {onUnregisteredAccountPage} = require("../../support/UI/unregisteredAccountPage");
 const {onWomenCollectionPage} = require("../../support/UI/womenCollectionPage");
 const {onDetailProductPage} = require("../../support/UI/detailProductPage");
-const {onCartPage} = require("../../support/UI/cartPage");
+const {onCartPage} = require("../../support/UI/cartpage");
 const {onCheckoutPage} = require("../../support/UI/checkoutPage");
 
 describe('Evershop UI Test', () => {
@@ -129,14 +129,17 @@ describe('Evershop UI Test', () => {
                 address = data.Address;
                 city = data.City;
                 country = data.Country;
+                province = data.Province;
                 postalCode = data.Postal_Code;
                 onCheckoutPage.fillShippingDetails1(fullName, telephone, address, city);
                 cy.wait(2000)
                 onCheckoutPage.fillShippingDetails2(country, province, postalCode);
+                cy.wait(2000)
                 onCheckoutPage.selectShippingMethod0;
                 onCheckoutPage.clickContinueToPayment;
-                order = 1;
-                onCheckoutPage.clickPaymentMethod(order);
+                cy.wait(2000)
+                onCheckoutPage.clickPaymentMethodCOD();
+                onCheckoutPage.clickPlaceOrder();
 
             });
 
@@ -144,7 +147,10 @@ describe('Evershop UI Test', () => {
     })
 
     it('Soal-5. Mobile Viewport Test',()=>{
-
+    cy.viewport('iphone-x')                      // 1. Ubah viewport
+    cy.visit('https://demo.evershop.io')         // 2. Buka homepage
+    cy.get('nav .md\\:hidden a.text-black', { timeout: 10000 })
+      .should('be.visible')
     })
 
 

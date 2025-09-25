@@ -5,27 +5,26 @@ export class checkoutPage {
     }
 
     fillShippingDetails1(fullName, telephone, address, city) {
-        cy.get('input[name="address[full_name]"]').type(fullName);
-        cy.get('input[name="address[telephone]"]').type(telephone);
-        cy.get('input[name="address[address_1]"]').type(address);
-        cy.get('input[name="address[city]"]').type(city);
+        cy.get('input[name="address[full_name]"]', { timeout: 10000 })
+        .type(fullName, { force: true });
+        cy.get('input[name="address[telephone]"]', { timeout: 10000 })
+        .type(telephone, { force: true });
+        cy.get('input[name="address[address_1]"]', { timeout: 10000 })
+        .type(address, { force: true });
+        cy.get('input[name="address[city]"]', { timeout: 10000 })
+        .type(city, { force: true });
     }
-    
-    fillShippingDetails2(country, province, postalCodes){
+
+    fillShippingDetails2(country, province, postalCode){
         //select country dropdown
-        cy.get('select[class="select-container"]')
-        .click();
-        cy.contains(country)
-        .click();
+        cy.get('select[name="address[country]"]')
+        .select(country, { force: true });
         cy.wait(2000)
         //select province dropdown
         cy.get('select[name="address[province]"]')
-        .click();
-        cy.contains(province)
-        .click();
-        cy.get('input[name="address[country]"]').type(country);
-        cy.get('input[name="address[postcode]"]').type(postalCode);
-        //cy.get('input[name="address[phone]"]').type(phone);
+        .select(province, { force: true });
+        cy.get('input[name="address[postcode]"]', { timeout: 10000 })
+        .type(postalCode, { force: true });
     }
         
 
@@ -41,18 +40,29 @@ export class checkoutPage {
        cy.get('button[type="submit"]').click(); 
     }
 
-    clickPaymentMethod(order) {
-         cy.get('div[class="flex justify-start items-center gap-4"]')
-         .eq(order)
-         .click();
+    clickPaymentMethodCOD() {
+    cy.get('.shipping-method-list', { timeout: 20000 })
+  .should('be.visible')
+  .contains('Standard')
+  .click();
+
+  cy.get('.payment-method-list', { timeout: 20000 })
+  .should('be.visible')
+  .contains('Cash On Delivery')
+  .click({ force: true });
+
+  cy.get('body').then($body => {
+  console.log($body.html());
+});
+
     }
 
     clickPlaceOrder() {
-       cy.get('button[type="button"]').click(); 
+       cy.contains('Place Order').click();
     }
 
     verifySuccessOrder() {
         cy.contains('Thank you').should('be.visible');
     }
 }
-export const onCheckoutPage = new checkoutPage();
+export const onCheckoutPage = new checkoutPage()

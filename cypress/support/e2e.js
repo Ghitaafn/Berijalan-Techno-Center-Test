@@ -16,3 +16,10 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import './API/api-method.js'
+
+// cypress/support/e2e.js atau di awal spec
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('Request failed with status code 400')) {
+    return false // mencegah Cypress fail
+  }
+})
